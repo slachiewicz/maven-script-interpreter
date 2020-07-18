@@ -27,8 +27,6 @@ updates:
   open-pull-requests-limit: 10
   ignore:
     - dependency-name: org.codehaus.groovy:groovy
-      versions:
-      - ">= 3.0"
+      versions: ["3.x"]
     - dependency-name: org.apache.ant:ant
-      versions:
-      - ">= 1.10"
+      versions: ["1.10.x"]
