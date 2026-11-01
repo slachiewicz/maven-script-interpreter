@@ -26,7 +26,7 @@ This component provides some utilities to interpret/execute some scripts for var
 Dependency declaration
 ----------------------
 
-```unknown
+```xml
 <dependency>
   <groupId>org.apache.maven.shared</groupId>
   <artifactId>maven-script-interpreter</artifactId>
@@ -38,7 +38,7 @@ Dependency declaration
 
 For example, if you want to use [**Grape**](https://docs.groovy-lang.org/latest/html/documentation/grape.html) in a **Groovy** script, you must add a dependency to Ivy in your project or in the plugin that will invoke the script:
 
-```unknown
+```xml
 <dependency>
   <groupId>org.apache.ivy</groupId>
   <artifactId>ivy</artifactId>
@@ -55,7 +55,7 @@ This class will search in the provided directory the script with the provided fi
 
 See [javadoc](./apidocs/org/apache/maven/shared/scriptinterpreter/ScriptRunner.html) for `run(...)` methods.
 
-```unknown
+```java
 try (ScriptRunner scriptRunner = new ScriptRunner()) {
     scriptRunner.run("test", new File("src/test/resources/bsh-test"), "verify", buildContext(),
             new FileLogger(logFile));
@@ -67,7 +67,7 @@ Mirror output from script interpreter
 
 In order to do something more with script output, eg. log by your application you must implement `FileLoggerMirrorHandler`
 
-```unknown
+```java
 class MyMirrorHandler implements FileLoggerMirrorHandler {
     void consumeOutput(String message) {
         // this method is invoked every time when flush occurs on the underlying stream.
@@ -77,7 +77,7 @@ class MyMirrorHandler implements FileLoggerMirrorHandler {
 
 Now use it:
 
-```unknown
+```java
 try (ScriptRunner scriptRunner = new ScriptRunner()) {
     scriptRunner.run("test", new File("src/test/resources/bsh-test"), "verify", buildContext(),
             new FileLogger(logFile, new MyMirrorHandler()));
@@ -96,7 +96,7 @@ Your scripts will have by default three global variables:
 
 You can add more global variables as it.
 
-```unknown
+```java
 try (ScriptRunner scriptRunner = new ScriptRunner()) {
     scriptRunner.setGlobalVariable( name, value );
     ...
@@ -107,7 +107,7 @@ try (ScriptRunner scriptRunner = new ScriptRunner()) {
 
 You can pass some values to your script using an execution context which have the type `Map<String, ? extends Object> context`:
 
-```unknown
+```java
 private Map<String, Object> buildContext() {
     Map<String, Object> context = new HashMap<String, Object>();
     context.put("foo", "bar");
@@ -117,14 +117,14 @@ private Map<String, Object> buildContext() {
 
 Then values are available in scripts context:
 
-```unknown
+```java
 // in your bsh script
 String value = context.get( "foo" );
 ```
 
 value will be "bar"
 
-```unknown
+```groovy
 // in your Groovy script
 context.get("foo")
 ```
@@ -133,7 +133,7 @@ context.get("foo")
 
 You can add some additional classpath entries for your script execution
 
-```unknown
+```text
 List<String> classpathEntries = list of jar paths
 
 try (ScriptRunner scriptRunner = new ScriptRunner()) {
